@@ -5,8 +5,8 @@ import { AWW_COMMAND, INVITE_COMMAND } from "./commands";
 import { getCuteUrl } from "./reddit";
 
 const router = AutoRouter<IRequest, [Env, ExecutionContext], Response>()
-router.all('*', verifySignature)
-router.post('/', async (req, env) => {
+router.all('/interactions', verifySignature)
+router.post('/interactions', async (req, env) => {
   const message = await req.json<MyInteraction>();
 
   if (message.type === InteractionType.PING) {
