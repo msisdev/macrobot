@@ -35,10 +35,21 @@
 		"strict": true,
 
     /* Skip type checking all .d.ts files. */
-		"skipLibCheck": true,
+		"skipLibCheck": true,		"baseUrl": "./",
+
+		"paths": {
+			"@/*": ["./*"]
+		},
+		
 		"types": [
 			"./worker-configuration.d.ts",
 			"node"
-		]
-	}
+		],
+	},
+
+	"include": [
+		"types/*.ts",
+		"worker-configuration.d.ts",
+		"src/**/*.ts"
+, "src/server/reddit.js"	]
 }

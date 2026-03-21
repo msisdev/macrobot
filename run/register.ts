@@ -1,4 +1,4 @@
-import { commands } from './commands';
+import { commands } from '@/src/server/commands';
 
 /**
  * This file is meant to be run from the command line, and is not used by the

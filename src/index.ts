@@ -14,6 +14,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+import server from '@/src/server';
+
 export default {
 	// Our fetch handler is invoked on a HTTP request: we can send a message to a queue
 	// during (or after) a request.
@@ -21,12 +23,14 @@ export default {
 	async fetch(req, env, ctx): Promise<Response> {
 		// To send a message on a queue, we need to create the queue first
 		// https://developers.cloudflare.com/queues/get-started/#3-create-a-queue
-		await env.MY_QUEUE.send({
-			url: req.url,
-			method: req.method,
-			headers: Object.fromEntries(req.headers),
-		});
-		return new Response('Sent message to the queue');
+		// await env.MY_QUEUE.send({
+		// 	url: req.url,
+		// 	method: req.method,
+		// 	headers: Object.fromEntries(req.headers),
+		// });
+		// return new Response('Sent message to the queue');
+		
+		return server.fetch(req, env, ctx);
 	},
 	// The queue handler is invoked when a batch of messages is ready to be delivered
 	// https://developers.cloudflare.com/queues/platform/javascript-apis/#messagebatch
