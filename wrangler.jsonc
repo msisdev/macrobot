@@ -21,7 +21,7 @@
 			{
 				"queue": "macrobot-queue",
 				"max_batch_size": 10,
-        "dead_letter_queue": "my-queue-dlq"
+        "dead_letter_queue": "macrobot-queue-dlq"
 			}
 		],
 	},
