@@ -53,5 +53,5 @@ router.post('/interactions', async (req, env) => {
 });
 
 export default {
-  fetch: router.handle
+  fetch: router.fetch
 }
