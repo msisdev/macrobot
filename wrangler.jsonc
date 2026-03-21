@@ -14,12 +14,12 @@
 		"producers": [
 			{
 				"binding": "MY_QUEUE",
-				"queue": "cb699499d67946a68db91664ce56fb93"
+				"queue": "macrobot-queue"
 			}
 		],
 		"consumers": [
 			{
-				"queue": "cb699499d67946a68db91664ce56fb93",
+				"queue": "macrobot-queue",
 				"max_batch_size": 10,
         "dead_letter_queue": "my-queue-dlq"
 			}
