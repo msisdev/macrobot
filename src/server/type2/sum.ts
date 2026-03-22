@@ -19,7 +19,7 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
   try {
     const ai = new GoogleGenAI({ apiKey: env.GOOGLE_GENAI_API_KEY });
     const response = await ai.models.generateContent({
-      model: "gemini-3.0-flash", // Default or typical models 
+      model: "gemini-3.1-flash-lite-preview", // Default or typical models 
       contents: `Summarize the content at this URL: ${url}. Return the result strictly in JSON format with a single key "summary" containing the markdown formatted summary.`,
       config: {
         responseMimeType: "application/json",

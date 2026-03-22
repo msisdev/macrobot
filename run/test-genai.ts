@@ -10,7 +10,7 @@ async function main() {
   }
 
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3.1-flash-lite-preview",
     contents: `Summarize the content at this URL: ${url}. Return the result strictly in JSON format with a single key "summary" containing the markdown formatted summary.`,
     config: {
       responseMimeType: "application/json",
