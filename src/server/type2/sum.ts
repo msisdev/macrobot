@@ -7,7 +7,9 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
   const data = msg.data;
   const url = (data && 'options' in data && Array.isArray(data.options)) ? (data.options?.[0] as any)?.value : undefined;
 
-  if (!url || !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(url)) {
+  try {
+    new URL(url)
+  } catch (err) {
     return Response.json({
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
