@@ -50,6 +50,8 @@
 	"include": [
 		"types/*.ts",
 		"worker-configuration.d.ts",
-		"src/**/*.ts"
-, "src/server/util/reddit.js"	]
+		"src/**/*.ts",
+		"run/**/*.ts",
+		"src/server/util/reddit.js",
+	]
 }

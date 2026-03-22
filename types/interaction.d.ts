@@ -1,19 +1,31 @@
-import { APIApplicationCommandAutocompleteInteraction, APIApplicationCommandInteraction, APIMessageComponentInteraction, APIModalSubmitInteraction, APIPingInteraction } from "discord-api-types/v10"
+import {
+  APIApplicationCommandAutocompleteInteraction,
+  APIApplicationCommandInteraction,
+  APIInteraction,
+  APIMessageComponentInteraction,
+  APIModalSubmitInteraction,
+  APIPingInteraction,
+} from "discord-api-types/v10"
 import { InteractionType } from "discord-interactions"
 
 declare global {
+  // Enum values are nominally typed. To map between two different enums with the same
+  // numeric values, we extract the literal number and match it against the target enum.
+  type MapEnum<T, TargetEnum> = `${T & number}` extends `${infer N extends number}` 
+    ? Extract<TargetEnum, N> 
+    : never;
 
-  type MyPingInteraction = Omit<APIPingInteraction, 'type'> & { type: InteractionType.PING }
-  type MyApplicationCommandInteraction = Omit<APIApplicationCommandInteraction, 'type'> & { type: InteractionType.APPLICATION_COMMAND }
-  type MyMessageComponentInteraction = Omit<APIMessageComponentInteraction, 'type'> & { type: InteractionType.MESSAGE_COMPONENT }
-  type MyAutocompleteInteraction = Omit<APIApplicationCommandAutocompleteInteraction, 'type'> & { type: InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE }
-  type MyModalSubmitInteraction = Omit<APIModalSubmitInteraction, 'type'> & { type: InteractionType.MODAL_SUBMIT }
+  type ReplaceInteractionType<T> = T extends { type: number }
+    ? Omit<T, 'type'> & { type: MapEnum<T['type'], InteractionType> }
+    : T;
 
-  type MyInteraction = MyPingInteraction
-    | MyApplicationCommandInteraction
-    | MyMessageComponentInteraction
-    | MyAutocompleteInteraction
-    | MyModalSubmitInteraction
+  type MyPingInteraction = ReplaceInteractionType<APIPingInteraction>
+  type MyApplicationCommandInteraction = ReplaceInteractionType<APIApplicationCommandInteraction>
+  type MyMessageComponentInteraction = ReplaceInteractionType<APIMessageComponentInteraction>
+  type MyAutocompleteInteraction = ReplaceInteractionType<APIApplicationCommandAutocompleteInteraction>
+  type MyModalSubmitInteraction = ReplaceInteractionType<APIModalSubmitInteraction>
+
+  type MyInteraction = ReplaceInteractionType<APIInteraction>
 }
 
 export {}

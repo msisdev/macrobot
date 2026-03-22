@@ -1,3 +1,4 @@
 DISCORD_TOKEN=<discord-token>
 DISCORD_PUBLIC_KEY=<discord-public-key>
 DISCORD_APPLICATION_ID=<discord-application-id>
+GOOGLE_GENAI_API_KEY=<gen-ai-api-key>

@@ -1,6 +1,9 @@
 import { ApplicationCommandInteractionHandler } from "./config";
 import awwHandler from "./aww";
+import helloHandler from "./hello";
 import inviteHandler from "./invite";
+import sumHandler from "./sum";
+import sum from "./sum";
 
 const handler: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) => {
   // Most user commands will come as `APPLICATION_COMMAND`.
@@ -10,6 +13,12 @@ const handler: ApplicationCommandInteractionHandler = async (req, env, ctx, msg)
     }
     case inviteHandler.name: {
       return inviteHandler.handle(req, env, ctx, msg);
+    }
+    case helloHandler.name: {
+      return helloHandler.handle(req, env, ctx, msg);
+    }
+    case sumHandler.name: {
+      return sumHandler.handle(req, env, ctx, msg);
     }
     default:
       console.error('Unknown Command');
