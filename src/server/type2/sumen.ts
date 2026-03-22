@@ -1,5 +1,5 @@
 import { InteractionResponseType } from "discord-interactions";
-import { SUM_COMMAND } from "../commands";
+import { SUMEN_COMMAND } from "../commands";
 import { ApplicationCommandInteractionHandler } from "./config";
 import { GoogleGenAI } from "@google/genai";
 
@@ -26,7 +26,7 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
       const ai = new GoogleGenAI({ apiKey: env.GOOGLE_GENAI_API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview", // Default or typical models 
-        contents: `Summarize the content at this URL: ${url}. Always include the title of the content of the URL (it is usually an article). Return the result strictly in JSON format with a single key "summary" containing the markdown formatted summary. The summary MUST be in Korean.`,
+        contents: `Summarize the content at this URL: ${url}. Always include the title of the content of the URL (it is usually an article). Return the result strictly in JSON format with a single key "summary" containing the markdown formatted summary.`,
         config: {
           responseMimeType: "application/json",
         },
@@ -63,6 +63,6 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
 }
 
 export default {
-  name: SUM_COMMAND.name.toLowerCase(),
+  name: SUMEN_COMMAND.name.toLowerCase(),
   handle,
 }

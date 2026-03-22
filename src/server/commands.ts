@@ -34,6 +34,19 @@ export const SUM_COMMAND: DiscordCommand = {
   ],
 }
 
+export const SUMEN_COMMAND: DiscordCommand = {
+  name: 'sumen',
+  description: 'Submit a url and the bot will summarize it for you in English.',
+  options: [
+    {
+      name: 'url',
+      description: 'The URL of the article to summarize.',
+      type: 3, // Discord ApplicationCommandOptionType.STRING
+      required: true,
+    },
+  ],
+}
+
 export const HELLO_COMMAND: DiscordCommand = {
   name: 'hello',
   description: 'Say hello to the bot.',
@@ -52,4 +65,5 @@ export const commands = [
   HELLO_COMMAND,
   INVITE_COMMAND,
   SUM_COMMAND,
+  SUMEN_COMMAND,
 ];
