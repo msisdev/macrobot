@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 import { SUM_COMMAND } from "../commands";
-import { ApplicationCommandInteractionHandler } from "./config";
+import { ApplicationCommandInteractionHandler } from "@/src/server/type2/config";
 import { GoogleGenAI, Type } from "@google/genai";
 
 const responseSchema = {
@@ -74,16 +74,16 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
       });
 
       const parsed = JSON.parse(response.text || '{}');
-      if (!parsed.title || !parsed.date || !parsed.content) {
-        throw new Error('Invalid response schema');
-      }
+      const content = `# ${parsed.title}\n\${parsed.date}\n${parsed.content}`;
 
       await fetch(`https://discord.com/api/v10/webhooks/${applicationId}/${interactionToken}/messages/@original`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: getResponse(parsed) }),
+        body: JSON.stringify({
+          content,
+        }),
       });
     } catch (error) {
       await fetch(`https://discord.com/api/v10/webhooks/${applicationId}/${interactionToken}/messages/@original`, {

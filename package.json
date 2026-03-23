@@ -17,6 +17,8 @@
 		"@google/genai": "^1.46.0",
 		"discord-api-types": "^0.38.42",
 		"discord-interactions": "^4.4.0",
-		"itty-router": "^5.0.23"
+		"itty-router": "^5.0.23",
+		"zod": "^4.3.6",
+		"zod-to-json-schema": "^3.25.1"
 	}
 }
