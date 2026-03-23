@@ -38,8 +38,8 @@ const getPrompt = (url: string) => `
   제목을 제외한 모든 내용은 다양한 깊이의 리스트 형식으로 작성하라.
 `
 
-const getResponse = (parsed: any) => {
-  const content = `# ${parsed.title}\n${parsed.date}\n${parsed.content}`;
+const getResponse = (url: string, parsed: any) => {
+  const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n- ${parsed.source}\n${parsed.content}`;
   return content;
 }
 
@@ -83,7 +83,7 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: getResponse(parsed) }),
+        body: JSON.stringify({ content: getResponse(url, parsed) }),
       });
     } catch (error) {
       await fetch(`https://discord.com/api/v10/webhooks/${applicationId}/${interactionToken}/messages/@original`, {
