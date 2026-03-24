@@ -32,15 +32,18 @@ const getPrompt = (url: string) => `
 - "title"은 제공된 URL의 콘텐츠의 제목이어야한다.
 - "date"는 제공된 URL의 콘텐츠의 발행 날짜여야 하며, YYYY-MM-DD 형식이어야한다.
 - "source"는 제공된 URL의 콘텐츠의 출처여야한다. 예를 들어, 웹사이트나 출판물의 이름이 될 수 있다. 유튜브의 경우 채널명이 될 수 있다.
-- "content"은 제공된 URL의 콘텐츠에 대한 한국어로 된 마크다운 형식의 요약이어야한다. 유튜브의 경우 영상의 주요 내용을 요약해야한다.
-  최상단 \`#\` 제목은 생략하고 \`##\` 부터 시작하라.
+- "content"은 제공된 URL의 콘텐츠에 대한 한국어로 된 마크다운 형식의 요약이어야한다.
+  유튜브의 경우 영상의 주요 내용을 요약해야한다.
   건조체 또는 간결체로 작성하라.
-  제목을 제외한 모든 내용은 다양한 깊이의 리스트 형식으로 작성하라. 줄바꿈을 활용하되 최소한으로 사용하라. 
+  제목 또는 부제목을 위해 \`#\` 형식을 쓰지 않는다.
+  자세한 내용은 다양한 깊이의 리스트 형식으로 작성하라.
+  줄바꿈을 활용하되 최소한으로 사용하라. 
 `
 
 const getResponse = (url: string, parsed: any) => {
   const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n- ${parsed.source}\n\n${parsed.content}`;
-  return content.replace(/\n/g, '\n ');
+  // return content.replace(/\n/g, ' \n ');
+  return content;
 }
 
 const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) => {
