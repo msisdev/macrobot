@@ -42,8 +42,8 @@ const getPrompt = (url: string) => `
 
 const getResponse = (url: string, parsed: any) => {
   const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n- ${parsed.source}\n\n${parsed.content}`;
-  // return content.replace(/\n/g, ' \n ');
-  return content;
+  return content.replace(/\n/g, ' \n ');
+  // return content;
 }
 
 const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) => {
