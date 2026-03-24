@@ -45,6 +45,7 @@ async function main() {
     config: {
       responseMimeType: "application/json",
       responseSchema: responseSchema,
+      tools: [{ googleSearch: {}, urlContext: {} }],
     },
   });
   

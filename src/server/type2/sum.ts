@@ -75,7 +75,7 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
         config: {
           responseMimeType: "application/json",
           responseSchema: responseSchema,
-          tools: [{ googleSearch: {}, urlContext: { url } }],
+          tools: [{ googleSearch: {}, urlContext: {} }],
         },
       });
 
