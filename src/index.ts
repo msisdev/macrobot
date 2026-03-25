@@ -15,6 +15,7 @@
  */
 
 import server from '@/src/server';
+import { processSum, queueBody } from '@/src/server/type2/sum';
 
 export default {
 	// Our fetch handler is invoked on a HTTP request: we can send a message to a queue
@@ -40,6 +41,15 @@ export default {
 		for (let message of batch.messages) {
 			// Process each message (we'll just log these)
 			console.log(`message ${message.id} processed: ${JSON.stringify(message.body)}`);
+			const body = message.body as any;
+			try {
+				if (body.type === 'sum') {
+					await processSum(env, queueBody.parse(body));
+				}
+			} catch (error) {
+				console.error(`Error processing message ${message.id}:`, error);
+			}
+			message.ack();
 		}
 	},
 } satisfies ExportedHandler<Env, Error>;

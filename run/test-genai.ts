@@ -1,36 +1,7 @@
+import { getPrompt, responseSchema } from "@/src/server/type2/sum";
 import { GoogleGenAI, Type } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY! });
-
-const responseSchema = {
-  type: Type.OBJECT,
-  properties: {
-    title: {
-      type: Type.STRING,
-      description: "The title of the content at the provided URL",
-    },
-    date: {
-      type: Type.STRING,
-      description: "The publication date of the content at the provided URL in YYYY-MM-DD format",
-    },
-    content: {
-      type: Type.STRING,
-      description: "The markdown formatted summary of the content at the provided URL in Korean",
-    },
-  },
-  required: ["title", "date", "content"],
-};
-
-const getPrompt = (url: string) => `
-이 URL을 요약하라: ${url}.
-결과를 "title", "date", "content" 키를 가진 JSON 형식으로 엄격하게 반환하라.
-- "title"은 제공된 URL의 콘텐츠의 제목이어야한다.
-- "content"은 제공된 URL의 콘텐츠에 대한 한국어로 된 마크다운 형식의 요약이어야한다.
-  최상단 \`#\` 제목은 생략하고 \`##\` 부터 시작하라.
-  건조체 또는 간결체로 작성하라.
-  제목을 제외한 모든 내용은 다양한 깊이의 리스트 형식으로 작성하라.
-- "date"는 제공된 URL의 콘텐츠의 발행 날짜여야 하며, YYYY-MM-DD 형식이어야한다.
-`;
 
 async function main() {
   const url = process.argv[2];

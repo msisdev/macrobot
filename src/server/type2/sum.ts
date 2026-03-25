@@ -2,8 +2,9 @@ import { InteractionResponseType } from "discord-interactions";
 import { SUM_COMMAND } from "../commands";
 import { ApplicationCommandInteractionHandler } from "./config";
 import { GoogleGenAI, Type } from "@google/genai";
+import z from "zod";
 
-const responseSchema = {
+export const responseSchema = {
   type: Type.OBJECT,
   properties: {
     title: {
@@ -26,7 +27,7 @@ const responseSchema = {
   required: ["title", "date", "content"],
 }
 
-const getPrompt = (url: string) => `
+export const getPrompt = (url: string) => `
 이 URL을 요약하라: ${url}.
 결과를 "title", "source", "date", "content" 키를 가진 JSON 형식으로 엄격하게 반환하라.
 - "title"은 제공된 URL의 콘텐츠의 제목이어야한다.
@@ -48,6 +49,51 @@ const getResponse = (url: string, parsed: any) => {
   return content.replace(/\\n/g, '\n');
 }
 
+export const queueBody = z.object({
+  type: z.literal('sum'),
+  url: z.string(),
+  applicationId: z.string(),
+  interactionToken: z.string(),
+})
+
+export const processSum = async (env: Env, body: z.output<typeof queueBody>) => {
+  try {
+    const ai = new GoogleGenAI({ apiKey: env.GOOGLE_GENAI_API_KEY });
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview", // Default or typical models 
+      contents: getPrompt(body.url),
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: responseSchema,
+        tools: [{ googleSearch: {}, urlContext: {} }],
+      },
+    });
+
+    const parsed = JSON.parse(response.text || '{}');
+    if (!parsed.title || !parsed.date || !parsed.content) {
+      throw new Error('Invalid response schema');
+    }
+
+    await fetch(`https://discord.com/api/v10/webhooks/${body.applicationId}/${body.interactionToken}/messages/@original`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content: getResponse(body.url, parsed) }),
+    });
+  } catch (error) {
+    await fetch(`https://discord.com/api/v10/webhooks/${body.applicationId}/${body.interactionToken}/messages/@original`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: 'Failed to summarize the URL or invalid response.',
+      }),
+    });
+  }
+};
+
 const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) => {
   const data = msg.data;
   const url = (data && 'options' in data && Array.isArray(data.options)) ? (data.options?.[0] as any)?.value : undefined;
@@ -66,43 +112,12 @@ const handle: ApplicationCommandInteractionHandler = async (req, env, ctx, msg) 
   const applicationId = msg.application_id;
   const interactionToken = msg.token;
 
-  ctx.waitUntil((async () => {
-    try {
-      const ai = new GoogleGenAI({ apiKey: env.GOOGLE_GENAI_API_KEY });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview", // Default or typical models 
-        contents: getPrompt(url),
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: responseSchema,
-          tools: [{ googleSearch: {}, urlContext: {} }],
-        },
-      });
-
-      const parsed = JSON.parse(response.text || '{}');
-      if (!parsed.title || !parsed.date || !parsed.content) {
-        throw new Error('Invalid response schema');
-      }
-
-      await fetch(`https://discord.com/api/v10/webhooks/${applicationId}/${interactionToken}/messages/@original`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: getResponse(url, parsed) }),
-      });
-    } catch (error) {
-      await fetch(`https://discord.com/api/v10/webhooks/${applicationId}/${interactionToken}/messages/@original`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: 'Failed to summarize the URL or invalid response.',
-        }),
-      });
-    }
-  })());
+  ctx.waitUntil(env.MY_QUEUE.send({
+    type: 'sum',
+    url,
+    applicationId,
+    interactionToken,
+  }));
 
   return Response.json({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
