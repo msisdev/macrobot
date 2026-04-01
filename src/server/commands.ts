@@ -9,34 +9,9 @@ export type DiscordCommand = {
   }>;
 }
 
-// for tutorial
-export const AWW_COMMAND: DiscordCommand = {
-  name: 'aww',
-  description: 'Drop some cuteness on this channel.',
-}
-
-// for tutorial
-export const INVITE_COMMAND: DiscordCommand = {
-  name: 'invite',
-  description: 'Get an invite link to add this bot to your server.',
-}
-
 export const SUM_COMMAND: DiscordCommand = {
   name: 'sum',
   description: 'Submit a url and the bot will summarize it for you.',
-  options: [
-    {
-      name: 'url',
-      description: 'The URL of the article to summarize.',
-      type: 3, // Discord ApplicationCommandOptionType.STRING
-      required: true,
-    },
-  ],
-}
-
-export const SUMEN_COMMAND: DiscordCommand = {
-  name: 'sumen',
-  description: 'Submit a url and the bot will summarize it for you in English.',
   options: [
     {
       name: 'url',
@@ -61,9 +36,6 @@ export const HELLO_COMMAND: DiscordCommand = {
 }
 
 export const commands = [
-  AWW_COMMAND,
   HELLO_COMMAND,
-  INVITE_COMMAND,
   SUM_COMMAND,
-  SUMEN_COMMAND,
 ];

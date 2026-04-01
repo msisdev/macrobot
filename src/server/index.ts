@@ -1,7 +1,8 @@
 import { AutoRouter, IRequest } from "itty-router";
 import { verifySignature } from "./middleware";
 import { InteractionResponseType, InteractionType } from "discord-interactions";
-import type2Handler from './type2'
+import interactionsHandler from './interactions'
+import { handleButton } from "./interactions/test";
 
 const router = AutoRouter<IRequest, [Env, ExecutionContext], Response>()
 router.all('/interactions', verifySignature)
@@ -18,8 +19,17 @@ router.post('/interactions', async (req, env, ctx) => {
 
   // Most user commands will come as `APPLICATION_COMMAND`.
   if (msg.type === InteractionType.APPLICATION_COMMAND) {
-    return type2Handler(req, env, ctx, msg)
+    return interactionsHandler(req, env, ctx, msg)
   }
+
+  if (msg.type == InteractionType.MESSAGE_COMPONENT) {
+    switch (msg.data.custom_id) {
+      case 'test_confirm_btn': {
+        return handleButton(req, env, ctx, msg)
+      }
+    }
+  }
+
 
   console.error('Unknown Type');
   return Response.json({ error: 'Unknown Type' }, { status: 400 });

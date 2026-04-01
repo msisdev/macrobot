@@ -46,7 +46,21 @@
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
 	"vars": {
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "macrobot-pro",
+			"database_id": "38fa62ad-01dc-46f3-b7ad-13d7149231dd",
+			"migrations_dir": "drizzle/migrations",
+		},
+		{
+			"binding": "DB_PREVIEW",
+			"database_name": "macrobot-pre",
+			"database_id": "12f57088-848a-41b1-bca0-f9c020490a3c",
+			"migrations_dir": "drizzle/migrations",
+		},
+	],
 	/**
 	 * Static Assets
 	 * https://developers.cloudflare.com/workers/static-assets/binding/

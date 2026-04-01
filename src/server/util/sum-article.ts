@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 import { SUM_COMMAND } from "../commands";
-import { ApplicationCommandInteractionHandler } from "@/src/server/type2/config";
+import { ApplicationCommandInteractionHandler } from "@/src/server/interactions/config";
 import { GoogleGenAI, Type } from "@google/genai";
 
 const responseSchema = {
