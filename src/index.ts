@@ -15,7 +15,7 @@
  */
 
 import server from '@/src/server';
-import { processSum, queueBody } from '@/src/server/type2/sum';
+import { processSum, queueBody } from '@/src/server/interactions/sum';
 
 export default {
 	// Our fetch handler is invoked on a HTTP request: we can send a message to a queue

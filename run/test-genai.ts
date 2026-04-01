@@ -1,4 +1,4 @@
-import { getPrompt, responseSchema } from "@/src/server/type2/sum";
+import { getPrompt, responseSchema } from "@/src/server/interactions/sum";
 import { GoogleGenAI, Type } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY! });
