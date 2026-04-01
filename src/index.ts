@@ -15,7 +15,9 @@
  */
 
 import server from '@/src/server';
-import { processSum, queueBody } from '@/src/server/interactions/sum';
+import { processSum } from './server/interactions/sum/queue';
+import { queueBodySchema } from './server/interactions/sum/config';
+
 
 export default {
 	// Our fetch handler is invoked on a HTTP request: we can send a message to a queue
@@ -44,7 +46,7 @@ export default {
 			const body = message.body as any;
 			try {
 				if (body.type === 'sum') {
-					await processSum(env, queueBody.parse(body));
+					await processSum(env, queueBodySchema.parse(body));
 				}
 			} catch (error) {
 				console.error(`Error processing message ${message.id}:`, error);
