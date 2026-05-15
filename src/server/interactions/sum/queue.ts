@@ -12,7 +12,7 @@ export const processSum = async (env: Env, body: z.output<typeof queueBodySchema
   try {
     const ai = new GoogleGenAI({ apiKey: env.GOOGLE_GENAI_API_KEY });
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview", // Default or typical models 
+      model: "gemini-3.1-flash-lite", // Default or typical models 
       contents: toGenaiPrompt(body.url),
       config: {
         responseMimeType: "application/json",
