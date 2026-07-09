@@ -1,7 +1,4 @@
-import { getPrompt, responseSchema } from "@/src/server/interactions/sum";
-import { GoogleGenAI, Type } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY! });
+import { generateSummary } from "@/src/server/interactions/sum/gemini";
 
 async function main() {
   const url = process.argv[2];
@@ -10,19 +7,14 @@ async function main() {
     process.exit(1);
   }
 
-  const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
-    contents: getPrompt(url),
-    config: {
-      responseMimeType: "application/json",
-      responseSchema: responseSchema,
-      tools: [{ googleSearch: {}, urlContext: {} }],
-    },
-  });
-  
-  const parsed = JSON.parse(response.text || '{}');
-  const content = `# ${parsed.title}\n${parsed.date}\n${parsed.content}`;
-  console.log(content);
+  try {
+    const apiKey = process.env.GOOGLE_GENAI_API_KEY!;
+    const parsed = await generateSummary(apiKey, url);
+    const content = `# ${parsed.title}\n${parsed.date}\n${parsed.content}`;
+    console.log(content);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 main();

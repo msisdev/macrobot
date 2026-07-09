@@ -1,8 +1,4 @@
-import { APIApplicationCommandInteraction } from "discord-api-types/v10";
-
-export type ApplicationCommandInteractionHandler = (
-  req: Request,
-  env: Env,
-  ctx: ExecutionContext,
-  msg: MyApplicationCommandInteraction,
-) => Promise<Response>;
+export interface InteractionHandler<T extends MyInteraction = MyInteraction> {
+  matches(msg: MyInteraction): msg is T;
+  handle(req: Request, env: Env, ctx: ExecutionContext, msg: T): Promise<Response>;
+}
