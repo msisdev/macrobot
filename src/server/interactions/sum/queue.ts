@@ -4,8 +4,9 @@ import { updateDiscordMessage } from "@/src/server/util/discord";
 import { generateSummary } from "./gemini";
 
 const toDiscordContent = (url: string, parsed: any) => {
-  const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n- ${parsed.source}\n\n${parsed.content}`;
-  return content.replace(/\\n/g, '\n');
+  const sourcePart = parsed.source ? `- ${parsed.source}` : '';
+  const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n${sourcePart}\n- 평가: ${parsed.sentimentEmoji} ${parsed.sentiment}\n\n${parsed.content}`;
+  return content.replace(/\\n/g, '\n').replace(/\n\n- 평가/g, '\n- 평가');
 }
 
 export const processSum = async (env: Env, body: z.output<typeof queueBodySchema>) => {

@@ -14,8 +14,8 @@ export const generateSummary = async (apiKey: string, url: string) => {
   });
 
   const parsed = JSON.parse(response.text || '{}');
-  if (!parsed.title || !parsed.date || !parsed.content) {
+  if (!parsed.title || !parsed.date || !parsed.content || !parsed.sentiment) {
     throw new Error('Invalid response schema');
   }
-  return parsed as { title: string, source?: string, date: string, content: string };
+  return parsed as { title: string, source?: string, date: string, sentiment: string, sentimentEmoji: string, content: string };
 };
