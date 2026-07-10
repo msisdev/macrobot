@@ -5,8 +5,8 @@ import { generateSummary } from "./gemini";
 
 const toDiscordContent = (url: string, parsed: any) => {
   const sourcePart = parsed.source ? `- ${parsed.source}` : '';
-  const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n${sourcePart}\n- 평가: ${parsed.sentimentEmoji} ${parsed.sentiment}\n\n${parsed.content}`;
-  return content.replace(/\\n/g, '\n').replace(/\n\n- 평가/g, '\n- 평가');
+  const content = `# [${parsed.title}](${url})\n- ${parsed.date}\n${sourcePart}\n- ${parsed.sentimentEmoji} ${parsed.sentiment}\n\n${parsed.content}`;
+  return content.replace(/\\n/g, '\n').replace(/\n\n- /g, '\n- ');
 }
 
 export const processSum = async (env: Env, body: z.output<typeof queueBodySchema>) => {
