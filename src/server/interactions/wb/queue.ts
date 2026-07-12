@@ -18,9 +18,9 @@ export const toDiscordContent = (name: string, parsed: any) => {
 ## 📋 투자 철학 평가
 
 ### 🏢 사업 부문 (Business Tenets)
-- 단순하고 이해 가능한가?: ${renderStars(parsed.scoreBusinessSimplicity)}
-- 안정적인 영업 이력을 가졌는가?: ${renderStars(parsed.scoreBusinessHistory)}
-- 장기적 경제적 해자가 있는가?: ${renderStars(parsed.scoreBusinessMoat)}
+- 단순하고 이해 가능: ${renderStars(parsed.scoreBusinessSimplicity)}
+- 안정적인 영업 이력: ${renderStars(parsed.scoreBusinessHistory)}
+- 장기적 경제적 해자: ${renderStars(parsed.scoreBusinessMoat)}
 
 ### 👥 경영진 부문 (Management Tenets)
 - 자본 배분의 합리성: ${renderStars(parsed.scoreManagementCapitalAllocation)}
@@ -31,7 +31,7 @@ export const toDiscordContent = (name: string, parsed: any) => {
 - 높은 ROE 유지: ${renderStars(parsed.scoreFinancialROE)}
 - 잉여현금흐름 창출력: ${renderStars(parsed.scoreFinancialFCF)}
 - 높은 매출액 대비 이익률: ${renderStars(parsed.scoreFinancialMargin)}
-- 1달러의 유보 원칙 달성 여부: ${renderStars(parsed.scoreFinancialOneDollarRule)}
+- 1달러의 유보 원칙 달성: ${renderStars(parsed.scoreFinancialOneDollarRule)}
 
 ### ⚖️ 가치와 가격 부문 (Market Tenets)
 - 내재 가치 산출에 따른 매력도: ${renderStars(parsed.scoreMarketIntrinsicValue)}
