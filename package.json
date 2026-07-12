@@ -6,7 +6,13 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"cf-typegen": "wrangler types"
+		"cf-typegen": "wrangler types",
+		"cmd": "bun --env-file=.dev.vars run",
+		"cmd:delete": "bun --env-file=.dev.vars run run/delete.ts",
+		"cmd:fetch-all": "bun --env-file=.dev.vars run run/fetch-all.ts",
+		"cmd:register": "bun --env-file=.dev.vars run run/register.ts",
+		"cmd:register-all": "bun --env-file=.dev.vars run run/register-all.ts",
+		"cmd:test-genai": "bun --env-file=.dev.vars run run/test-genai.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",
