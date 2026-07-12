@@ -10,7 +10,7 @@ export const toGenaiPrompt = (url: string) => `
   YYYY-MM-DD 형식으로 작성하라.
   발행 날짜를 정확히 알 수 없다면 "알 수 없음"으로 표기하라.
 - "source"는 제공된 URL의 콘텐츠의 출처여야한다. 예를 들어, 웹사이트나 출판물의 이름이 될 수 있다. 유튜브의 경우 채널명이 될 수 있다.
-- "sentiment"는 이 콘텐츠 내용에 대한 사람들의 반응, 주가의 향방 등 종합 평가로서 긍정적인지 여부를 의미한다. "호재", "악재", "복합적" 중 하나로 분류하되, 하나의 특정 종목에 대한 뉴스가 아니라면 무조건 "복합적"으로 반환하라.
+- "sentiment"는 이 콘텐츠 내용에 대한 사람들의 반응, 전체적인 뉘앙스, 혹은 주가나 시장의 향방을 종합 평가하여 가장 잘 나타내는 "하나의 단어"로 자유롭게 표현하라. 단순한 기사라면 "정보", 특정 종목 뉴스가 아니라면 "거시경제" 혹은 "산업동향" 등 적절한 단어를 선택하라.
 - "sentimentEmoji"는 해당 콘텐츠의 전반적인 분위기나 뉘앙스를 가장 잘 담아내는 이모지 1개를 자유롭게 선택하라. 정해진 틀에서 벗어나 더 넓고 풍부한 느낌을 표현하면 좋다.
 - "content"은 제공된 URL의 콘텐츠에 대한 한국어로 된 마크다운 형식의 요약이어야한다.
   유튜브의 경우 영상의 주요 내용을 요약해야한다.
@@ -37,7 +37,7 @@ export const genaiResponseSchema = {
     },
     sentiment: {
       type: Type.STRING,
-      description: "The overall sentiment of the content. Categorized as '호재', '악재', or '복합적'. Must be '복합적' if the news is not about a single specific stock.",
+      description: "A single Korean word representing the overall sentiment, nuance, or topic of the content.",
     },
     sentimentEmoji: {
       type: Type.STRING,
