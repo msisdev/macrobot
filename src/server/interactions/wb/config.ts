@@ -23,7 +23,7 @@ export const toGenaiPrompt = (name: string) => `
 - "scoreMarketIntrinsicValue": 내재 가치 산출에 따른 매력도 (5점 만점 숫자)
 - "scoreMarketSafetyMargin": 안전 마진 확보 수준 (5점 만점 숫자). 현재 가격("currentPrice")을 기준으로 가치를 판단하라.
 - "summary"는 12개 항목 관점을 종합하여 이 기업이 장기 투자에 적합한지에 대한 종합 의견 3~4문장이다.
-- "action"은 매수 / 관망 / 매도 중 하나를 현재 가격("currentPrice")을 바탕으로 지정한다.
+- "action"은 현재 가격("currentPrice")을 바탕으로 한 최종 투자 의견(예: "Strong Buy", "Buy", "Accumulate (분할 매수)", "Hold", "Sell", "Strong Sell" 등)이다. 영어 원문이나 한글 등 직관적인 표현을 자유롭게 사용하라.
 `;
 
 export const genaiResponseSchema = {
@@ -59,7 +59,7 @@ export const genaiResponseSchema = {
     },
     action: {
       type: Type.STRING,
-      description: "Final Action: Buy / Hold / Sell",
+      description: "Final Action recommendation (e.g. Strong Buy, Buy, Accumulate, Hold, Sell, Strong Sell)",
     },
   },
   required: [
