@@ -16,7 +16,9 @@
 
 import server from '@/src/server';
 import { processSum } from './server/interactions/sum/queue';
-import { queueBodySchema } from './server/interactions/sum/config';
+import { queueBodySchema as sumQueueBodySchema } from './server/interactions/sum/config';
+import { processSum as processWb } from './server/interactions/wb/queue';
+import { queueBodySchema as wbQueueBodySchema } from './server/interactions/wb/config';
 
 
 export default {
@@ -46,7 +48,9 @@ export default {
 			const body = message.body as any;
 			try {
 				if (body.type === 'sum') {
-					await processSum(env, queueBodySchema.parse(body));
+					await processSum(env, sumQueueBodySchema.parse(body));
+				} else if (body.type === 'wb') {
+					await processWb(env, wbQueueBodySchema.parse(body));
 				}
 			} catch (error) {
 				console.error(`Error processing message ${message.id}:`, error);

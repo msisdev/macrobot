@@ -12,7 +12,8 @@
 		"cmd:fetch-all": "bun --env-file=.dev.vars run run/fetch-all.ts",
 		"cmd:register": "bun --env-file=.dev.vars run run/register.ts",
 		"cmd:register-all": "bun --env-file=.dev.vars run run/register-all.ts",
-		"cmd:test-genai": "bun --env-file=.dev.vars run run/test-genai.ts"
+		"cmd:test-sum": "bun --env-file=.dev.vars run run/test-sum.ts",
+		"cmd:test-wb": "bun --env-file=.dev.vars run run/test-wb.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",

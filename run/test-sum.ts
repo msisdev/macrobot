@@ -1,4 +1,5 @@
 import { generateSummary } from "@/src/server/interactions/sum/gemini";
+import { toDiscordContent } from "@/src/server/interactions/sum/queue";
 
 async function main() {
   const url = process.argv[2];
@@ -10,7 +11,7 @@ async function main() {
   try {
     const apiKey = process.env.GOOGLE_GENAI_API_KEY!;
     const parsed = await generateSummary(apiKey, url);
-    const content = `# ${parsed.title}\n${parsed.date}\n${parsed.content}`;
+    const content = toDiscordContent(url, parsed);
     console.log(content);
   } catch (error) {
     console.error(error);

@@ -1,7 +1,8 @@
 import helloHandler from "./hello";
 import sumHandler from "./sum";
+import wbHandler from "./wb";
 
-const handlers = [helloHandler, sumHandler];
+const handlers = [helloHandler, sumHandler, wbHandler];
 
 const handler = async (req: Request, env: Env, ctx: ExecutionContext, msg: MyInteraction) => {
   for (const handler of handlers) {
