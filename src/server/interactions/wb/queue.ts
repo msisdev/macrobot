@@ -8,7 +8,7 @@ export const toDiscordContent = (name: string, parsed: any) => {
     return `❌ 분석 실패: 종목 또는 티커 '${name}'을(를) 찾을 수 없습니다. 정확한 명칭이나 티커 기호를 입력해 주세요.`;
   }
   
-  const renderStars = (score: number) => '💛'.repeat(score) + '🤍'.repeat(5 - score);
+  const renderStars = (score: number) => '💛'.repeat(score) + '🩶'.repeat(5 - score);
 
   const content = `# 워런 버핏 투자 분석
 - **분석 종목**: ${parsed.title}
