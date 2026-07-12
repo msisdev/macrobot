@@ -11,6 +11,7 @@ export const toDiscordContent = (name: string, parsed: any) => {
   const content = `# 워런 버핏 투자 분석
 - **분석 종목**: ${parsed.title}
 - **현재 주가**: ${parsed.currentPrice}
+- **목표 주가**: ${parsed.targetPrice}
 
 ## 📋 투자 철학 평가
 

@@ -21,6 +21,7 @@ export const generateSummary = async (apiKey: string, name: string) => {
     found: boolean, 
     title: string, 
     currentPrice: string,
+    targetPrice: string,
     scoreBusinessSimplicity: number, 
     scoreBusinessHistory: number, 
     scoreBusinessMoat: number, 
